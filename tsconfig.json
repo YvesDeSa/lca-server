@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "ES2017",                            // Define a versão de JavaScript para a qual será transpilado
+      "module": "commonjs",                          // Módulo comum usado com Node.js
+      "strict": true,                                // Habilita verificações estritas de tipo
+      "esModuleInterop": true,                       // Permite a interoperabilidade entre módulos CommonJS e ES Modules
+      "skipLibCheck": true,                          // Ignora verificação de tipo para bibliotecas
+      "forceConsistentCasingInFileNames": true,      // Força consistência em maiúsculas e minúsculas em nomes de arquivos
+      "experimentalDecorators": true,                // Habilita o uso de decoradores (necessário para tsyringe e TypeORM)
+      "emitDecoratorMetadata": true,                 // Emite metadados necessários para decoradores funcionarem
+      "outDir": "./dist",                            // Diretório de saída para os arquivos compilados
+      "rootDir": "./src"                             // Diretório raiz do código fonte
+    },
+    "include": ["src"],                              // Inclui os arquivos na pasta src
+    "exclude": ["node_modules"]                      // Exclui a pasta node_modules
+  }
+  
