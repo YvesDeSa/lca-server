@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import { AppError } from '../errors/AppError';
-import { UsersRepository } from "../modules/accounts/repositories/implements/UserRepository";
-
+import { UsersRepository } from '../modules/users/repositories/UsersRepository';
 interface IPayload {
   iat: number;
   exp: number;
@@ -14,7 +13,6 @@ export async function ensureAuthenticated(
   response: Response,
   next: NextFunction,
 ) {
-
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
@@ -30,15 +28,20 @@ export async function ensureAuthenticated(
     ) as IPayload;
 
     const userRepository = new UsersRepository();
-    const user = userRepository.findById(user_id);
+    const user = await userRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError("user does not exists", 401);
+      throw new AppError("User does not exist", 401);
     }
 
-    next();
+    request.user = {
+      id: user_id,
+      role: user.role,
+    };
 
-  } catch {
+    next(); 
+
+  } catch (error) {
     throw new AppError('Invalid JWT token', 401);
   }
 }
